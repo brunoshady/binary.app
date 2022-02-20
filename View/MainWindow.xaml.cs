@@ -1,4 +1,6 @@
-﻿namespace BinaryApp
+﻿using BinaryApp.ViewModel;
+
+namespace BinaryApp.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -7,6 +9,7 @@
     {
         public MainWindow()
         {
+            DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
     }
