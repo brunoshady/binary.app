@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Input;
 using BinaryApp.Command;
 using BinaryApp.Services;
@@ -12,10 +14,8 @@ namespace BinaryApp.ViewModel
         private readonly BinaryWebService _binaryWebService;
         
         public ICommand ConnectCommand { get; }
-        
-        private string _token;
 
-        public ObservableCollection<Log> LogCollection => _logger?.LogCollection;
+        public ICollectionView CollectionLog => CollectionViewSource.GetDefaultView(_logger?.LogCollection ?? new ObservableCollection<Log>());
 
         public bool IsConnected => _binaryWebService?.IsConnected ?? false;
 
@@ -28,8 +28,22 @@ namespace BinaryApp.ViewModel
             ConnectCommand = new RelayCommand(ConnectCanExecute, Connect);
                 
             InitializeEnvironmentVariables();
+
+            ShowDebug = true;
         }
 
+        private bool _showDebug;
+        public bool ShowDebug
+        {
+            get => _showDebug;
+            set
+            {
+                _showDebug = value;
+                ShowDebugChanged();
+            }
+        }
+
+        private string _token;
         public string Token
         {
             get => _token;
@@ -55,6 +69,16 @@ namespace BinaryApp.ViewModel
                 _binaryWebService.IsConnected = true;
                 OnPropertyChanged(nameof(IsConnected));    
             }
+        }
+
+        private void ShowDebugChanged()
+        {
+            if (ShowDebug)
+                CollectionLog.Filter = null; 
+            else
+                CollectionLog.Filter = x => x is Log log && log.Type != LogType.Debug; 
+
+            CollectionLog.Refresh();
         }
 
         private void InitializeEnvironmentVariables()

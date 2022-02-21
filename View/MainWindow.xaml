@@ -33,13 +33,13 @@
             </Grid.ColumnDefinitions>
             
             <Label Grid.Row="0" Grid.Column="0">Token:</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Token, UpdateSourceTrigger=PropertyChanged}" 
-                     IsEnabled="{Binding IsConnected, Converter={StaticResource TokenEnabledConverter}}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Token, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource TokenEnabledConverter}}"/>
             <Button Grid.Row="0" Grid.Column="3" Content="{Binding IsConnected, Converter={StaticResource IsConnectedConverter}}" Command="{Binding ConnectCommand}"/>
+            <CheckBox Grid.Row="1" Grid.Column="0" Content="Debug" IsChecked="{Binding ShowDebug}"/>
         </Grid>
         
         <Grid Grid.Row="1" Margin="10" >
-            <DataGrid ItemsSource="{Binding LogCollection}" IsReadOnly="True" />
+            <DataGrid ItemsSource="{Binding CollectionLog}" IsReadOnly="True" />
         </Grid>
     </Grid>
 </Window>
