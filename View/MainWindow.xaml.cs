@@ -1,4 +1,5 @@
-﻿using BinaryApp.ViewModel;
+﻿using BinaryApp.Services;
+using BinaryApp.ViewModel;
 
 namespace BinaryApp.View
 {
@@ -9,7 +10,11 @@ namespace BinaryApp.View
     {
         public MainWindow()
         {
+            var logger = Logger.GetInstance();
+            
+            logger.AddLog("Setting DataContext...", LogType.Debug);
             DataContext = new MainWindowViewModel();
+            logger.AddLog("Initializing...");
             InitializeComponent();
         }
     }

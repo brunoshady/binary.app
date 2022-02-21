@@ -55,9 +55,15 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Include="Command\RelayCommand.cs" />
         <Compile Include="Properties\Annotations.cs" />
+        <Compile Include="Services\BinaryWebService.cs" />
+        <Compile Include="Services\Log.cs" />
+        <Compile Include="Services\Logger.cs" />
         <Compile Include="ViewModel\MainWindowViewModel.cs" />
         <Compile Include="ViewModel\SimpleViewModel.cs" />
+        <Compile Include="View\Converter\ConnectButtonContentConverter.cs" />
+        <Compile Include="View\Converter\TokenEnabledConverter.cs" />
         <Compile Include="View\MainWindow.xaml.cs">
           <DependentUpon>MainWindow.xaml</DependentUpon>
           <SubType>Code</SubType>
@@ -85,6 +91,9 @@
         <Generator>MSBuild:Compile</Generator>
         <SubType>Designer</SubType>
       </Page>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Model" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
