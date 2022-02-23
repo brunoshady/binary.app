@@ -29,6 +29,6 @@ public class Logger
             Type = logType
         };
 
-        LogCollection.Add(newLog);
+        ThreadUtils.RunOnUiThread(() => LogCollection.Add(newLog));
     }
 }

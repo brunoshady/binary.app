@@ -18,6 +18,7 @@ namespace BinaryApp.ViewModel
         public ICollectionView CollectionLog => CollectionViewSource.GetDefaultView(_logger?.LogCollection ?? new ObservableCollection<Log>());
 
         public bool IsConnected => _binaryWebService?.IsConnected ?? false;
+        public bool IsConnecting => _binaryWebService?.IsConnecting ?? false;
 
         public MainWindowViewModel()
         {
@@ -52,7 +53,13 @@ namespace BinaryApp.ViewModel
 
         private bool ConnectCanExecute(object obj)
         {
-            return !string.IsNullOrEmpty(_token);
+            if (string.IsNullOrEmpty(_token))
+                return false;
+
+            if (IsConnecting)
+                return false;
+
+            return true;
         }
 
         private void Connect(object obj)
@@ -60,15 +67,15 @@ namespace BinaryApp.ViewModel
             if (IsConnected)
             {
                 _logger.AddLog("Disconnecting...");
-                _binaryWebService.IsConnected = false;
-                OnPropertyChanged(nameof(IsConnected));
+                _binaryWebService.Disconnect();
             }
             else
             {
                 _logger.AddLog("Connecting...");
-                _binaryWebService.IsConnected = true;
-                OnPropertyChanged(nameof(IsConnected));    
+                _binaryWebService.Connect();
             }
+            
+            OnPropertyChanged(nameof(IsConnected));
         }
 
         private void ShowDebugChanged()
