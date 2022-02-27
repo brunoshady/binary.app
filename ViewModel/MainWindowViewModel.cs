@@ -74,8 +74,6 @@ namespace BinaryApp.ViewModel
                 _logger.AddLog("Connecting...");
                 _binaryWebService.Connect();
             }
-            
-            OnPropertyChanged(nameof(IsConnected));
         }
 
         private void ShowDebugChanged()

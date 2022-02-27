@@ -4,8 +4,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Text.Json;
 using BinaryApp.Model;
+using BinaryApp.Utils;
 using BinaryApp.ViewModel;
 
 namespace BinaryApp.Services;
@@ -92,7 +92,7 @@ public class BinaryWebService
                 _logger.AddLog($"Received {str}", LogType.Debug);
 
 
-                var json = JsonSerializer.Deserialize<ResponseMessage>(str);
+                var response = JsonHandler.Deserialize(str);
 
             } while (!result.EndOfMessage);
         }
@@ -108,17 +108,32 @@ public class BinaryWebService
         _logger.AddLog($"Connection established!");
         UpdateIsConnected();
     }
+
+
+    private async Task Authorize(CancellationToken cancellationToken)
+    {
+        var authorize = new {authorize = _mainWindowViewModel.Token};
+        var authorizeJson = JsonHandler.Serialize(authorize);
+
+        await SendRequestAsync(authorizeJson, cancellationToken).ConfigureAwait(false);
+    }
+    
+    
+    
     
     public void Connect()
     {
         Task.Run(async () =>
         {
             var cancellationToken = new CancellationToken();
-            string data = "{\"ticks\":\"R_100\"}";
+            string data = "{\"ticks\":\"1HZ100V\"}";
 
             _webSocket = new ClientWebSocket();
 
             await ConnectAsync(cancellationToken).ConfigureAwait(false);
+            
+            await Authorize(cancellationToken).ConfigureAwait(false);
+            
             await SendRequestAsync(data, cancellationToken).ConfigureAwait(false);
             await StartListenAsync(cancellationToken).ConfigureAwait(false);
         });

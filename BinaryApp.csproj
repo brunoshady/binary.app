@@ -94,7 +94,8 @@
             <SubType>Code</SubType>
         </Compile>
         <Compile Include="Command\RelayCommand.cs" />
-        <Compile Include="Model\ResponseMessage.cs" />
+        <Compile Include="Model\AuthorizeResponse.cs" />
+        <Compile Include="Model\TickResponse.cs" />
         <Compile Include="Properties\Annotations.cs" />
         <Compile Include="Services\BinaryWebService.cs" />
         <Compile Include="Services\Log.cs" />
