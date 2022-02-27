@@ -99,6 +99,7 @@
         <Compile Include="Services\BinaryWebService.cs" />
         <Compile Include="Services\Log.cs" />
         <Compile Include="Services\Logger.cs" />
+        <Compile Include="Utils\JsonHandler.cs" />
         <Compile Include="Utils\ThreadUtils.cs" />
         <Compile Include="ViewModel\MainWindowViewModel.cs" />
         <Compile Include="ViewModel\SimpleViewModel.cs" />
